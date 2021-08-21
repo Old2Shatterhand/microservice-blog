@@ -1,0 +1,58 @@
+apiVersion: skaffold/v2beta21
+kind: Config
+deploy:
+    kubectl:
+        manifests:
+            - k8s/*.yaml
+build:
+    local:
+        push: false
+    artifacts:
+        - image: oldshatterhand/client
+          context: client
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: 'src/**/*.js'
+                    dest: .
+        - image: oldshatterhand/comments
+          context: comments
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: '*.js'
+                    dest: .
+        - image: oldshatterhand/event-bus
+          context: event-bus
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: '*.js'
+                    dest: .
+        - image: oldshatterhand/moderation
+          context: moderation
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: '*.js'
+                    dest: .
+        - image: oldshatterhand/posts
+          context: posts
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: '*.js'
+                    dest: .
+        - image: oldshatterhand/query
+          context: query
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: '*.js'
+                    dest: .
